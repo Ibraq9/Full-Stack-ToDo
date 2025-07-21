@@ -4,12 +4,14 @@ import React from 'react'
 import { useMyContext } from '../context/ModalContext'
 import { getTasks } from '@/action/task.action'
 import { deleteTask } from '@/action/task.action'
+import { completedTask } from '@/action/task.action'
 import { useRouter } from 'next/navigation'
 
 const Task = ({ id, title, description, completed, createdAt }: { id: number, title: string, description: string, completed: boolean, createdAt: Date }) => {
 
     const { setIsOpen, setModalData, setEditMode } = useMyContext();
-    const router = useRouter();
+
+    const router = useRouter()
 
     const handleEdit = async (id: number) => {
         setIsOpen(true);
@@ -29,37 +31,64 @@ const Task = ({ id, title, description, completed, createdAt }: { id: number, ti
 
     const handleDelete = async (id: number) => {
         await deleteTask(id)
-      window.location.reload()
+        window.location.reload()
     }
 
 
+    const handleCompleteTask = async () => {
+        const newStatus = !completed;
+        await completedTask(id, newStatus);
+        window.location.reload();
+    };
+
+
+
     return (
-        <div className='flex justify-between bg-orange-200 dark:bg-slate-700 w-full space-x-2 text-black dark:text-white p-4 rounded-xl'>
+        <div className='flex bg-orange-200 dark:bg-slate-700 w-full space-x-2 text-black dark:text-white my-2 p-4 rounded-md shadow-lg'>
+
+            <div className='flex items-center'>
+                <label className="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" className="sr-only peer" />
+                    <div
+                        onClick={handleCompleteTask}
+                        className={`w-5 h-5 rounded-full border border-gray-400 dark:peer-checked:bg-blue-900 peer-checked:bg-orange-500   ${completed ? 'bg-orange-500 dark:bg-blue-900' : ''} transition-colors`}
+                    ></div>
+                </label>
+            </div>
+
             <div className='flex items-center gap-2 w-full justify-between'>
 
                 <div className='flex flex-col space-y-1 mb-2 text-orange-800 dark:text-white'>
-                    <h1 className='text-lg font-bold'>{title}</h1>
+                    <h1 className={`text-lg font-bold ${completed ? 'line-through opacity-60' : ''}`}>
+                        {title}
+                    </h1>
                     <p className='text-sm'>{description}</p>
                 </div>
 
                 <div className='flex flex-col text-orange-800 dark:text-white'>
-                    <p className='text-xs '>{createdAt.toLocaleDateString()}</p>
-                    <p className='text-xs '>{completed ? 'Completed' : 'Pending'}</p>
+                    <p className='text-xs'>{createdAt.toLocaleDateString('en-GB')}</p>
+                    <p className='text-xs'>{completed ? 'Completed' : 'Pending'}</p>
                 </div>
 
             </div>
 
             <div className='flex items-center space-x-1'>
-                <button className='dark:bg-blue-950 bg-orange-800 px-2 py-1 rounded-md text-white cursor-pointer' onClick={() => handleEdit(id)}>edit</button>
-                <div className='dark:bg-blue-950  p-1 rounded-md'>
+                <button
+                    className='dark:bg-blue-950 bg-orange-800 px-2 py-1 rounded-md text-white cursor-pointer'
+                    onClick={() => handleEdit(id)}
+                >
+                    edit
+                </button>
+                <div className='dark:bg-blue-950 p-1 rounded-md'>
                     <Trash onClick={() => handleDelete(id)} className='cursor-pointer' color='red' size={25} />
                 </div>
             </div>
 
         </div>
-
     )
+
 }
+
 
 
 export default Task

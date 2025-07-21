@@ -1,7 +1,7 @@
 "use server"
 
 import { getUserId } from "./user.action";
-import { getTasksFrom_DB } from "@/lib/prisma";
+import { Convert_Comp_pend_DB, getTasksFrom_DB } from "@/lib/prisma";
 import { addTask_DB } from "@/lib/prisma";
 import { deleteTask_DB } from "@/lib/prisma";
 import { UpdateTask_DB } from "@/lib/prisma";
@@ -40,3 +40,6 @@ export async function UpdateTask({id,title,description}:{title: string; descript
 
 
 
+export async function completedTask(id :number , Iscomplete :boolean) {
+  await Convert_Comp_pend_DB(id,Iscomplete);
+}

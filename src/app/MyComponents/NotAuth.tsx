@@ -1,7 +1,5 @@
 
-import { useRouter } from "next/navigation"
 import { LogIn } from "lucide-react"
-import { StackServerApp } from "@stackframe/stack";
 import { stackServerApp } from "@/stack";
 import Link from "next/link";
 

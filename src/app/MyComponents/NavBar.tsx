@@ -48,8 +48,8 @@ const NavBar = async () => {
                             <button className='text-bold cursor-pointer '>Sign In</button>
                         </Link>
 
-                        <Link href={navigate.signUp} className='flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 bg-orange-800 hover:bg-orange-700'>
-                            <button className=' cursor-pointer text-bold p-1 px-2 rounded-md text-white '>Sign Up</button>
+                        <Link href={navigate.signUp} className='rounded-md flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 bg-orange-800 hover:bg-orange-700'>
+                            <button className=' cursor-pointer text-bold p-1 px-2  text-white '>Sign Up</button>
                         </Link>
 
                     </div>

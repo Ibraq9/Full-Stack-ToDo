@@ -3,8 +3,11 @@
 import { getTasks } from '@/action/task.action';
 import { useMyContext } from '../context/ModalContext'
 import React, { useEffect, useState } from 'react'
-import Task from './Task';
-import { Spinner } from "@/components/ui/spinner"
+import TaskPending from './TaskPending';
+import TaskCompleted from './TaskCompleted';
+import { Spinner } from "@/components/ui/spinner";
+import { ArrowDown, ArrowRight } from 'lucide-react';
+
 
 type FilterTasks = {
     id: number;
@@ -18,8 +21,23 @@ const Tasks = () => {
     const { searchTerm, sortType } = useMyContext();
     const [filteredTasks, setFilteredTasks] = useState<FilterTasks[]>([]);
     const [loading, setLoading] = useState(false);
+    const [appearCompleted, setappearCompleted] = useState(true);
 
-    // Combined search and sort function
+
+    const CompleteTasksCount = () => {
+        let count = 0;
+        for (let i = 0; i < filteredTasks.length; i++) {
+            if (filteredTasks[i].completed === true) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+
+
+
     const searchAndSort = async () => {
         try {
             setLoading(true);
@@ -30,13 +48,13 @@ const Tasks = () => {
                 return;
             }
 
-            // First: Filter/Search tasks
+
             let processedTasks = tasks.filter((task) =>
                 task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 task.description.toLowerCase().includes(searchTerm.toLowerCase())
             );
 
-            // Second: Sort the filtered tasks
+
             if (sortType === "Latest") {
                 processedTasks = processedTasks.sort((a, b) => {
                     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
@@ -69,22 +87,54 @@ const Tasks = () => {
         <div className='w-full space-y-2'>
             {filteredTasks.length === 0 ? (
                 <div className="w-full text-center py-4 text-gray-500">
-                    {searchTerm ? 'No tasks found matching your search.' : <Spinner/>}
+                    {searchTerm ? 'No tasks found matching your search.' : <Spinner />}
                 </div>
             ) : (
-                filteredTasks.map((task) => (
-                    <Task
-                        key={task.id}
-                        id={task.id}
-                        title={task.title}
-                        description={task.description ?? ''}
-                        completed={task.completed}
-                        createdAt={task.createdAt}
-                    />
-                ))
+                <div className='flex flex-col'>
+
+                    <div>
+                        {filteredTasks.filter(task => !task.completed).map(task => (
+                            <TaskPending
+                                key={task.id}
+                                id={task.id}
+                                title={task.title}
+                                description={task.description ?? ''}
+                                completed={task.completed}
+                                createdAt={task.createdAt}
+                            />
+                        ))}
+                    </div>
+
+
+                    <div className='mt-2'>
+
+                        {CompleteTasksCount() > 0 && (
+                            <div onClick={() => setappearCompleted(prev => !prev)} className='flex items-center gap-2 w-fit mb-2 cursor-pointer p-1.5 bg-orange-800 text-white dark:bg-slate-700'>
+                                {appearCompleted ? <ArrowDown size={18} /> : <ArrowRight size={18} />}
+                                {` Completed (${CompleteTasksCount()}) `}
+                            </div>
+                        )}
+
+
+                        {appearCompleted && (
+                            filteredTasks.filter(task => task.completed).map(task => (
+                                <TaskCompleted
+                                    key={task.id}
+                                    id={task.id}
+                                    title={task.title}
+                                    description={task.description ?? ''}
+                                    completed={task.completed}
+                                    createdAt={task.createdAt}
+                                />
+                            ))
+                        )}
+
+                    </div>
+
+                </div>
             )}
         </div>
-    )
+    );
 }
 
 export default Tasks

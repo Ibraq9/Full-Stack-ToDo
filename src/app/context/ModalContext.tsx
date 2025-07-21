@@ -5,8 +5,6 @@ import { createContext, useContext, useState, ReactNode } from 'react';
 interface ModalContextType {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  completedTasks: boolean;
-  setCompletedTasks: React.Dispatch<React.SetStateAction<boolean>>;
   ModalData: ModalTypes,
   setModalData: React.Dispatch<React.SetStateAction<ModalTypes>>;
   EditMode: boolean,
@@ -14,7 +12,7 @@ interface ModalContextType {
   searchTerm: string,
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>,
   sortType:string,
-  setSortType:React.Dispatch<React.SetStateAction<string>>
+  setSortType:React.Dispatch<React.SetStateAction<string>>,
 }
 
 type ModalTypes = {
@@ -23,15 +21,21 @@ type ModalTypes = {
   description: string;
 }
 
+type TaskInfoType={
+  isComplete:boolean,
+  TaskId:number,
+}
+
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export function ModalProvider({ children }: { children: ReactNode }) {
-  // Make sure initial state is consistent
+
+
   const [isOpen, setIsOpen] = useState(false);
-  const [completedTasks, setCompletedTasks] = useState(false);
   const [EditMode, setEditMode] = useState(false)
   const [searchTerm, setSearchTerm] = useState("");
   const [sortType, setSortType] = useState("Relavent");
+
   const [ModalData, setModalData] = useState<ModalTypes>({
     id: 0,
     title: "",
@@ -39,7 +43,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   })
 
   return (
-    <ModalContext.Provider value={{ isOpen, setIsOpen, completedTasks, setCompletedTasks, ModalData, setModalData, setEditMode, EditMode, searchTerm, setSearchTerm , sortType,setSortType}}>
+    <ModalContext.Provider value={{ isOpen, setIsOpen, ModalData, setModalData, setEditMode, EditMode, searchTerm, setSearchTerm , sortType,setSortType }}>
       {children}
     </ModalContext.Provider>
   );
