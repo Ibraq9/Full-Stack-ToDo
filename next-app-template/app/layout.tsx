@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
-import { Link } from "@heroui/link";
+import Link from "next/link";
 import clsx from "clsx";
 
 import { Providers } from "./providers";
@@ -49,9 +49,10 @@ export default function RootLayout({
             </main>
             <footer className="w-full flex items-center justify-center py-3">
               <Link
-                isExternal
-                className="flex items-center gap-1 text-current"
                 href="https://heroui.com?utm_source=next-app-template"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 text-current"
                 title="heroui.com homepage"
               >
                 <span className="text-default-600">Powered by</span>

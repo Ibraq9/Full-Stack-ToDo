@@ -5,7 +5,6 @@ import { useMyContext } from '../context/ModalContext'
 import React, { useEffect, useState } from 'react'
 import TaskPending from './TaskPending';
 import TaskCompleted from './TaskCompleted';
-import { Spinner } from "../../components/ui/spinner";
 import { ArrowDown, ArrowRight } from 'lucide-react';
 
 
@@ -80,14 +79,14 @@ const Tasks = () => {
     }, [searchTerm, sortType]);
 
     if (loading) {
-        return <Spinner size="lg" />
+        return "Loading..."
     }
 
     return (
         <div className='w-full space-y-2'>
             {filteredTasks.length === 0 ? (
                 <div className="w-full text-center py-4 text-gray-500">
-                    {searchTerm ? 'No tasks found matching your search.' : <Spinner />}
+                    {searchTerm ? 'No tasks found matching your search.' : "Loading..."}
                 </div>
             ) : (
                 <div className='flex flex-col'>
