@@ -40,7 +40,7 @@ const Hero = async () => {
             </div>
           )}
 
-          <div className='w-full space-y-4 flex justify-end items-center'>
+          <div className='w-full sm:w-1/4 space-y-4 flex justify-end items-center'>
 
             {user && (
               <div>

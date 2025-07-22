@@ -15,54 +15,58 @@ const NavBar = async () => {
     const user = await stackServerApp.getUser();
 
     return (
-        <div className='h-20 flex mr-6 justify-around items-center '>
+        <div className='flex w-full justify-center sticky top-0'>
+            <div className='bg-orange-200 w-full sm:w-3/4 rounded-br-lg rounded-bl-lg dark:bg-slate-700 shadow-lg h-20 flex justify-around items-center '>
 
-            <div className='flex items-center '>
-                <Image
-                    src={Logo}
-                    alt='Logo'
-                    width={270}
-                    height={250}
-                    className='mt-5 '
-                />
+
+                <div className='flex items-center '>
+                    <Image
+                        src={Logo}
+                        alt='Logo'
+                        width={270}
+                        height={250}
+                        className='mt-5 '
+                    />
+
+                </div>
+
+                <div className='flex space-x-2'>
+
+                    {user ? (
+
+                        <div className='flex gap-3 items-center'>
+                            <UserButton />
+                            <Link href={navigate.signOut} className='cursor-pointer flex items-center space-x-1 w-fit dark:text-wihte text-white bg-red-800 p-1 px-2 rounded-md'>
+                                <LogIn />
+                                <button className='text-bold cursor-pointer md:block hidden '>Sign out</button>
+                            </Link>
+                        </div>
+
+                    ) : (
+                        <div className='flex sapce-x-2 items-center gap-2'>
+
+                            <Link href={navigate.signIn} className='dark:bg-blue-600 dark:hover:bg-blue-700 cursor-pointer flex flex-nowrap items-center space-x-1 text-white  p-1 w-26 px-2 rounded-md bg-orange-800 hover:bg-orange-700'>
+                                <LogIn />
+                                <button className='text-bold cursor-pointer '>Sign In</button>
+                            </Link>
+
+                            <Link href={navigate.signUp} className='rounded-md flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 bg-orange-800 hover:bg-orange-700'>
+                                <button className=' cursor-pointer text-bold p-1 px-2  text-white '>Sign Up</button>
+                            </Link>
+
+                        </div>
+                    )}
+
+
+
+                    <ModeToggle />
+                </div>
+
+
 
             </div>
-
-            <div className='flex space-x-2'>
-
-                {user ? (
-
-                    <div className='flex gap-3 items-center'>
-                        <UserButton />
-                        <Link href={navigate.signOut} className='cursor-pointer flex items-center space-x-1 w-fit dark:text-wihte text-white bg-red-800 p-1 px-2 rounded-md'>
-                            <LogIn />
-                            <button className='text-bold cursor-pointer md:block hidden '>Sign out</button>
-                        </Link>
-                    </div>
-
-                ) : (
-                    <div className='flex sapce-x-2 items-center gap-2'>
-
-                        <Link href={navigate.signIn} className='dark:bg-blue-600 dark:hover:bg-blue-700 cursor-pointer flex flex-nowrap items-center space-x-1 text-white  p-1 w-26 px-2 rounded-md bg-orange-800 hover:bg-orange-700'>
-                            <LogIn />
-                            <button className='text-bold cursor-pointer '>Sign In</button>
-                        </Link>
-
-                        <Link href={navigate.signUp} className='rounded-md flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 bg-orange-800 hover:bg-orange-700'>
-                            <button className=' cursor-pointer text-bold p-1 px-2  text-white '>Sign Up</button>
-                        </Link>
-
-                    </div>
-                )}
-
-
-
-                <ModeToggle />
-            </div>
-
-
-
         </div>
+
     )
 }
 
