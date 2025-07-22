@@ -1,6 +1,6 @@
 "use server"
 
-import { stackServerApp } from "@/stack";
+import { stackServerApp } from "../stack";
 
 
 export async function getUserId() {

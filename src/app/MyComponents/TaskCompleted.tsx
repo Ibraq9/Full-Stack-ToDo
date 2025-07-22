@@ -2,23 +2,31 @@
 import { Trash } from 'lucide-react'
 import React from 'react'
 import { useMyContext } from '../context/ModalContext'
-import { getTasks } from '@/action/task.action'
-import { deleteTask } from '@/action/task.action'
-import { completedTask } from '@/action/task.action'
-import { useRouter } from 'next/navigation'
+import { getTasks } from '../../action/task.action'
+
+interface Task {
+    id: number;
+    title: string;
+    description: string;
+    completed: boolean;
+    createdAt: Date;
+}
+import { deleteTask } from '../../action/task.action'
+import { completedTask } from '../../action/task.action'
+
 
 const Task = ({ id, title, description, completed, createdAt }: { id: number, title: string, description: string, completed: boolean, createdAt: Date }) => {
 
-    const { setIsOpen, setModalData, setEditMode } = useMyContext();
-
-    const router = useRouter()
+    const {setIsOpen , setEditMode ,setModalData} =useMyContext()
 
     const handleEdit = async (id: number) => {
-        setIsOpen(true);
-        setEditMode(true);
+
 
         const tasks = await getTasks();
-        const specificTask = tasks?.find((task) => task.id === id);
+        const specificTask = tasks?.find((task: Task) => task.id === id);
+
+        setIsOpen(true);
+        setEditMode(true);
 
         if (specificTask) {
             setModalData({

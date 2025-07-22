@@ -4,7 +4,7 @@ import { stackServerApp } from "../stack";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ModalProvider } from "./context/ModalContext";
-import { ThemeProvider } from "@/app/MyComponents/themeProvider"
+import { ThemeProvider } from "./MyComponents/themeProvider"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

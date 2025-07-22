@@ -1,11 +1,10 @@
 "use server"
 
 import { getUserId } from "./user.action";
-import { Convert_Comp_pend_DB, getTasksFrom_DB } from "@/lib/prisma";
-import { addTask_DB } from "@/lib/prisma";
-import { deleteTask_DB } from "@/lib/prisma";
-import { UpdateTask_DB } from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
+import { Convert_Comp_pend_DB, getTasksFrom_DB } from "../lib/prisma";
+import { addTask_DB } from "../lib/prisma";
+import { deleteTask_DB } from "../lib/prisma";
+import { UpdateTask_DB } from "../lib/prisma";
 
 
 export async function getTasks() {

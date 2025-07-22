@@ -1,11 +1,11 @@
 "use client"
 
-import { getTasks } from '@/action/task.action';
+import { getTasks } from '../../action/task.action'
 import { useMyContext } from '../context/ModalContext'
 import React, { useEffect, useState } from 'react'
 import TaskPending from './TaskPending';
 import TaskCompleted from './TaskCompleted';
-import { Spinner } from "@/components/ui/spinner";
+import { Spinner } from "../../components/ui/spinner";
 import { ArrowDown, ArrowRight } from 'lucide-react';
 
 
@@ -49,18 +49,18 @@ const Tasks = () => {
             }
 
 
-            let processedTasks = tasks.filter((task) =>
+            let processedTasks = tasks.filter((task: FilterTasks) =>
                 task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                task.description.toLowerCase().includes(searchTerm.toLowerCase())
+                (task.description?.toLowerCase() ?? '').includes(searchTerm.toLowerCase())
             );
 
 
             if (sortType === "Latest") {
-                processedTasks = processedTasks.sort((a, b) => {
+                processedTasks = processedTasks.sort((a: FilterTasks, b: FilterTasks) => {
                     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
                 });
             } else if (sortType === "Oldest") {
-                processedTasks = processedTasks.sort((a, b) => {
+                processedTasks = processedTasks.sort((a: FilterTasks, b: FilterTasks) => {
                     return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
                 });
             }
