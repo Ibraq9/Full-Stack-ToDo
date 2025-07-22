@@ -10,6 +10,7 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@heroui/link": "^2.2.20",
     "@heroui/react": "^2.8.1",
     "@heroui/spinner": "^2.2.20",
     "@prisma/client": "^6.11.1",
