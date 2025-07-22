@@ -21,6 +21,7 @@
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-navigation-menu": "^1.2.13",
     "@radix-ui/react-slot": "^1.2.3",
+    "@react-types/shared": "^3.30.0",
     "@stackframe/stack": "^2.8.19",
     "@types/canvas-confetti": "^1.9.0",
     "canvas-confetti": "^1.9.3",
