@@ -31,16 +31,16 @@ const Hero = async () => {
           </div>
         )}
 
-        <div className=' flex sm:justify-between items-center flex-col sm:flex-row'>
+        <div className='w-full flex sm:justify-between items-center flex-col sm:flex-row'>
 
           {user && tasks?.length !== 0 && (
-            <div className='w-full flex sm:flex-row flex-col items-center'>
+            <div className='w-full sm:w-3/4 flex sm:flex-row flex-col items-center'>
               <SearchBar />
               <ToDo_Rank />
             </div>
           )}
 
-          <div className='w-full sm:w-1/4 space-y-4 flex justify-end items-center'>
+          <div className='w-full mt-2 sm:w-1/4 space-y-4 flex justify-end items-center'>
 
             {user && (
               <div>

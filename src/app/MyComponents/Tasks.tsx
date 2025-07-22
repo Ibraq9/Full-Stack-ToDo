@@ -86,7 +86,7 @@ const Tasks = () => {
         <div className='w-full space-y-2'>
             {filteredTasks.length === 0 ? (
                 <div className="w-full text-center py-4 text-gray-500">
-                    {searchTerm ? 'No tasks found matching your search.' : "Loading..."}
+                    {searchTerm ? 'No tasks found matching your search.' : ""}
                 </div>
             ) : (
                 <div className='flex flex-col'>
