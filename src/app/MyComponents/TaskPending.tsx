@@ -2,9 +2,9 @@
 import { Trash } from 'lucide-react'
 import React from 'react'
 import { useMyContext } from '../context/ModalContext'
-import { getTasks } from '@/action/task.action'
-import { deleteTask } from '@/action/task.action'
-import { completedTask } from '@/action/task.action'
+import { getTasks } from '../../action/task.action'
+import { deleteTask } from '../../action/task.action'
+import { completedTask } from '../../action/task.action'
 import { useRouter } from 'next/navigation'
 import confetti from 'canvas-confetti'
 

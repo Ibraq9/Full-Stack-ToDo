@@ -1,15 +1,15 @@
 "use client"
 
 import { useMyContext } from '../context/ModalContext'
-import { addTask, UpdateTask } from '@/action/task.action'
+import { addTask, UpdateTask } from '../../action/task.action'
 import {
     Dialog,
     DialogContent,
     DialogHeader,
     DialogTitle,
     DialogDescription,
-} from "@/components/ui/dialog"
-import { Button } from '@/components/ui/button'
+} from "../../components/ui/dialog"
+import { Button } from '../../components/ui/button'
 
 const Modal = function () {
     const { setIsOpen, ModalData, setModalData, EditMode } = useMyContext();

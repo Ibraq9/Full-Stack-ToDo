@@ -1,6 +1,6 @@
 
 import { LogIn } from "lucide-react"
-import { stackServerApp } from "@/stack";
+import { stackServerApp } from "../../stack";
 import Link from "next/link";
 
 const NotAuthenticated = () => {

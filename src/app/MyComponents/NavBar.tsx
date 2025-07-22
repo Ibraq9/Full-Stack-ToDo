@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Logo from '../../../public/My_Assets/Logo.png'
 import React from 'react'
-import { stackServerApp } from '@/stack'
+import { stackServerApp } from '../../stack'
 import { LogIn } from 'lucide-react'
 import Link from 'next/link'
 import { UserButton } from '@stackframe/stack'
