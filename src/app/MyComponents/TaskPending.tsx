@@ -54,7 +54,7 @@ const Task = ({ id, title, description, completed, createdAt }: { id: number, ti
 
 
     return (
-        <div className='mx-1 sm:mx-0 flex my-2 bg-orange-200 dark:bg-slate-700 w-full space-x-2 text-black dark:text-white p-4 rounded-md shadow-lg'>
+        <div className='flex my-2 bg-orange-200 dark:bg-slate-700 w-full space-x-2 text-black dark:text-white p-4 rounded-md shadow-lg'>
 
             <div className='flex items-center'>
                 <label className="inline-flex items-center cursor-pointer">

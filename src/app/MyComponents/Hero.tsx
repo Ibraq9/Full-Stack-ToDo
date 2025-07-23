@@ -31,7 +31,7 @@ const Hero = async () => {
           </div>
         )}
 
-        <div className='w-full flex sm:justify-between items-center flex-col sm:flex-row'>
+        <div className='w-full flex justify-between items-center flex-col sm:flex-row'>
 
           {user && tasks?.length !== 0 && (
             <div className='w-full sm:w-3/4 flex sm:flex-row flex-col items-center'>
@@ -40,15 +40,13 @@ const Hero = async () => {
             </div>
           )}
 
-          <div className='mr-1 sm:mr-0 w-full mt-2 space-y-4 flex justify-end items-center'>
 
-            {user && (
-              <div className=' w-full sm:w-1/4 flex justify-end'>
-                <AddTaskButton />
-              </div>
-            )}
+          {user && (
+            <div className={`w-full ${tasks?.length===0 ? 'w-full' : 'sm:w-1/4'} mr-4 mt-2 sm:mr-0 sm:mt-0 flex justify-end`}>
+              <AddTaskButton />
+            </div>
+          )}
 
-          </div>
 
         </div>
 
@@ -62,10 +60,10 @@ const Hero = async () => {
 
       {
         !user ? (
-          <NotAuthenticated/>
+          <NotAuthenticated />
         ) : (
-          <div className='flex space-y-2 w-full sm:w-3/4 flex-col items-center justify-center mt-10'>
-           <Tasks/>
+          <div className='flex w-16/17 sm:w-3/4 flex-col items-center justify-center mt-10'>
+            <Tasks />
           </div>
         )
       }

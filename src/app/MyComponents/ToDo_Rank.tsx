@@ -6,7 +6,7 @@ const ToDo_Rank = () => {
 
     const {setSortType , sortType} = useMyContext()
     return (
-        <div className="w-full sm:w-1/2 border-1 border-orange-800 rounded-3xl dark:border-blue-800">
+        <div className="w-16/17 sm:w-1/2 border-1 border-orange-800 rounded-3xl dark:border-blue-800">
             <select
                 value={sortType}
                 onChange={(e) => setSortType(e.target.value)}

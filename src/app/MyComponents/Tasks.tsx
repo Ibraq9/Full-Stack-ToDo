@@ -108,7 +108,7 @@ const Tasks = () => {
                     <div className='mt-2'>
 
                         {CompleteTasksCount() > 0 && (
-                            <div onClick={() => setappearCompleted(prev => !prev)} className='ml-1 sm:ml-0 flex items-center gap-2 w-fit mb-2 cursor-pointer p-1.5 bg-orange-800 text-white dark:bg-slate-700'>
+                            <div onClick={() => setappearCompleted(prev => !prev)} className=' rounded-sm ml-1 sm:ml-0 flex items-center gap-2 w-fit mb-2 cursor-pointer p-1.5 bg-orange-800 text-white dark:bg-slate-700'>
                                 {appearCompleted ? <ArrowDown size={18} /> : <ArrowRight size={18} />}
                                 {` Completed (${CompleteTasksCount()}) `}
                             </div>
