@@ -30,7 +30,7 @@ const NavBar = async () => {
 
                 </div>
 
-                <div className='flex space-x-2 items-center'>
+                <div className='flex space-x-2 items-center mr-7 sm:mr-0'>
 
                     {user ? (
 
