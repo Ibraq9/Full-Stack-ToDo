@@ -3,9 +3,8 @@
 import { getTasks } from '../../action/task.action'
 import { useMyContext } from '../context/ModalContext'
 import React, { useEffect, useState } from 'react'
-import TaskPending from './TaskPending';
-import TaskCompleted from './TaskCompleted';
 import { ArrowDown, ArrowRight } from 'lucide-react';
+import Task from './Task';
 
 
 type FilterTasks = {
@@ -93,7 +92,7 @@ const Tasks = () => {
 
                     <div>
                         {filteredTasks.filter(task => !task.completed).map(task => (
-                            <TaskPending
+                            <Task
                                 key={task.id}
                                 id={task.id}
                                 title={task.title}
@@ -117,7 +116,7 @@ const Tasks = () => {
 
                         {appearCompleted && (
                             filteredTasks.filter(task => task.completed).map(task => (
-                                <TaskCompleted
+                                <Task
                                     key={task.id}
                                     id={task.id}
                                     title={task.title}
