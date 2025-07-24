@@ -30,7 +30,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
 
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-orange-50 dark:bg-gray-900 antialiased `}
       ><StackProvider app={stackServerApp}><StackTheme>
         <ModalProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
