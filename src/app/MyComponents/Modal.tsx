@@ -12,22 +12,22 @@ import {
 import { Button } from '../../components/ui/button'
 
 const Modal = function () {
-    const { setIsOpen, ModalData, setModalData, EditMode, Isdelete } = useMyContext();
+    const { setIsOpen, ModalData, setModalData, EditMode, Isdelete ,setIsdelete ,setEditMode} = useMyContext();
 
     const handleFormAction = async (formData: FormData) => {
 
         const title = formData.get("title") as string;
         const description = formData.get("description") as string;
 
-        if (!EditMode) {
+        if (!EditMode && !Isdelete ) {
             await addTask({ title, description });
             window.location.reload();
-        } else if (EditMode) {
+        } else if (EditMode && !Isdelete) {
             if (ModalData?.id !== null && ModalData?.id !== undefined) {
                 await UpdateTask({ id: ModalData.id, title, description });
                 window.location.reload();
             } else {
-                alert("There is an error");
+                alert("There is an error on update Task");
                 return;
             }
         } else {
@@ -40,6 +40,13 @@ const Modal = function () {
         }
 
         setIsOpen(false);
+        setModalData({
+            id:null,
+            title:"",
+            description:"",
+        })
+        setIsdelete(false);
+        setEditMode(false);
     };
 
     return (

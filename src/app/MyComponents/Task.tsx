@@ -36,16 +36,11 @@ const Task = ({ id, title, description, completed, createdAt }: { id: number, ti
         setIsOpen(true);
         setIsdelete(true);
 
-        const tasks = await getTasks();
-        const specificTask = tasks?.find((task) => task.id === id);
-
-        if (specificTask) {
-            setModalData({
-                id: id,
-                title: specificTask.title,
-                description: specificTask.description
-            });
-        }
+        setModalData({
+            id:id,
+            title:"",
+            description:"",
+        })
     }
 
 
