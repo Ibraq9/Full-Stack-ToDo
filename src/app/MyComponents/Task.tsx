@@ -13,7 +13,7 @@ import confetti from 'canvas-confetti'
 const Task = ({ id, title, description, completed, createdAt }: { id: number, title: string, description: string, completed: boolean, createdAt: Date }) => {
 
 
-    const { setIsOpen, setModalData, setEditMode , setIsdelete } = useMyContext();
+    const { setIsOpen, setModalData, setEditMode, setIsdelete } = useMyContext();
     const router = useRouter()
 
     const handleEdit = async (id: number) => {
@@ -32,9 +32,20 @@ const Task = ({ id, title, description, completed, createdAt }: { id: number, ti
         }
     };
 
-    const handleDelete = () => {
+    const handleDelete = async (id: number) => {
         setIsOpen(true);
         setIsdelete(true);
+
+        const tasks = await getTasks();
+        const specificTask = tasks?.find((task) => task.id === id);
+
+        if (specificTask) {
+            setModalData({
+                id: id,
+                title: specificTask.title,
+                description: specificTask.description
+            });
+        }
     }
 
 
@@ -93,7 +104,7 @@ const Task = ({ id, title, description, completed, createdAt }: { id: number, ti
                         edit
                     </button>
                     <div className='dark:bg-blue-950 p-1 rounded-md'>
-                        <Trash onClick={ handleDelete} className='cursor-pointer' color='red' size={25} />
+                        <Trash onClick={()=>handleDelete(id)} className='cursor-pointer' color='red' size={25} />
                     </div>
                 </div>
 
@@ -127,7 +138,7 @@ const Task = ({ id, title, description, completed, createdAt }: { id: number, ti
                 <div className='flex items-center space-x-1'>
                     <button className='dark:bg-blue-950 bg-orange-800 px-2 py-1 rounded-md text-white cursor-pointer' onClick={() => handleEdit(id)}>edit</button>
                     <div className='dark:bg-blue-950  p-1 rounded-md'>
-                        <Trash onClick={handleDelete} className='cursor-pointer' color='red' size={25} />
+                        <Trash onClick={() => handleDelete(id)} className='cursor-pointer' color='red' size={25} />
                     </div>
                 </div>
 

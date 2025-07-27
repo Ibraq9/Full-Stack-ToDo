@@ -32,7 +32,7 @@ const Modal = function () {
             }
         } else {
             if (ModalData?.id !== null && ModalData?.id !== undefined) {
-                await deleteTask(ModalData?.id)
+                await deleteTask(ModalData.id)
                 window.location.reload()
             } else {
                 alert('there is an error when delete Task')
