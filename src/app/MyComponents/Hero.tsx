@@ -26,7 +26,7 @@ const Hero = async () => {
 
         {user && (
           <div className='flex items-center'>
-            <h1 className='text-2xl font-bold ml-4 text-orange-800 dark:text-white'>Daily tasks</h1>
+            <h1 className='text-2xl font-bold ml-4 text-orange-800 dark:text-white'>Daily Tasks</h1>
             <p className='w-8 sm:w-8 h-[4px] sm:h-[2px] dark:bg-white mt-2 bg-orange-800'></p>
           </div>
         )}

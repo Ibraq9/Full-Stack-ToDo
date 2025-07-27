@@ -32,7 +32,7 @@ const Task = ({ id, title, description, completed, createdAt }: { id: number, ti
         }
     };
 
-    const handleDelete = async () => {
+    const handleDelete = () => {
         setIsOpen(true);
         setIsdelete(true);
     }
