@@ -13,6 +13,8 @@ interface ModalContextType {
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>,
   sortType:string,
   setSortType:React.Dispatch<React.SetStateAction<string>>,
+  Isdelete:boolean,
+  setIsdelete:React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 type ModalTypes = {
@@ -30,7 +32,7 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export function ModalProvider({ children }: { children: ReactNode }) {
 
-
+  const [Isdelete,setIsdelete]=useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [EditMode, setEditMode] = useState(false)
   const [searchTerm, setSearchTerm] = useState("");
@@ -43,7 +45,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   })
 
   return (
-    <ModalContext.Provider value={{ isOpen, setIsOpen, ModalData, setModalData, setEditMode, EditMode, searchTerm, setSearchTerm , sortType,setSortType }}>
+    <ModalContext.Provider value={{ isOpen, setIsOpen, ModalData, setModalData, setEditMode,setIsdelete,Isdelete, EditMode, searchTerm, setSearchTerm , sortType,setSortType }}>
       {children}
     </ModalContext.Provider>
   );
