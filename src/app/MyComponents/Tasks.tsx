@@ -15,7 +15,7 @@ type FilterTasks = {
     createdAt: Date;
 }
 
-const Tasks = () => {
+const Tasks = ({tasks}:{tasks:FilterTasks[]}) => {
     const { searchTerm, sortType } = useMyContext();
     const [filteredTasks, setFilteredTasks] = useState<FilterTasks[]>([]);
     const [loading, setLoading] = useState(false);
@@ -39,7 +39,6 @@ const Tasks = () => {
     const searchAndSort = async () => {
         try {
             setLoading(true);
-            const tasks = await getTasks();
 
             if (!tasks || tasks.length === 0) {
                 setFilteredTasks([]);

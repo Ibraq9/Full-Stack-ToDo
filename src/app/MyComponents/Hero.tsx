@@ -63,7 +63,7 @@ const Hero = async () => {
           <NotAuthenticated />
         ) : (
           <div className='flex w-16/17 sm:w-3/4 flex-col items-center justify-center mt-10'>
-            <Tasks />
+            <Tasks tasks={tasks!} />
           </div>
         )
       }
