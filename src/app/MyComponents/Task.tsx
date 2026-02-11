@@ -14,6 +14,7 @@ const Task = ({ id, title, description, completed, createdAt }: { id: number, ti
 
 
     const { setIsOpen, setModalData, setEditMode, setIsdelete } = useMyContext();
+    const router = useRouter()
 
     const handleEdit = async (id: number) => {
         setIsOpen(true);
@@ -56,7 +57,7 @@ const Task = ({ id, title, description, completed, createdAt }: { id: number, ti
                 });
             });
         }
-        window.location.reload();
+        window.location.reload()
     };
 
 
