@@ -2,12 +2,11 @@
 import NavBar from "./MyComponents/NavBar";
 import Hero from "./MyComponents/Hero";
 
-export default function Home() {
+export default function Home({searchParams}:{searchParams:{search?:string ; sort?:"relevant" | "latest" | "oldest"}}) {
   return (
-    <div className="flex flex-col bg-orange-50 dark:bg-gray-900">
+    <div className="flex flex-col">
       <NavBar />
-
-      <Hero/>
+      <Hero searchParams={searchParams}/>
     </div>
   );
 }

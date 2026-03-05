@@ -33,8 +33,8 @@ export async function deleteTask(id:number) {
 }
 
 
-export async function UpdateTask({id,title,description}:{title: string; description: string; id: number}) {
-    return await UpdateTask_DB({id,title,description})
+export async function UpdateTask(id: number, title: string, description: string) {
+    return await UpdateTask_DB(id,title,description)
 }
 
 

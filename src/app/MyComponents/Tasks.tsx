@@ -1,10 +1,8 @@
-"use client";
 
-import { getTasks } from "../../action/task.action";
-import { useMyContext } from "../context/ModalContext";
-import React, { useEffect, useState } from "react";
-import { ArrowDown, ArrowRight } from "lucide-react";
+import React from "react";
+import { SearchX } from "lucide-react";
 import Task from "./Task";
+import { Accordian } from "./Accordian";
 
 type FilterTasks = {
   id: number;
@@ -14,131 +12,75 @@ type FilterTasks = {
   createdAt: Date;
 };
 
-const Tasks = ({ tasks }: { tasks: FilterTasks[] }) => {
-  const { searchTerm, sortType } = useMyContext();
-  const [filteredTasks, setFilteredTasks] = useState<FilterTasks[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [appearCompleted, setappearCompleted] = useState(true);
+type TasksProps = {
+  tasks: FilterTasks[];
+  searchParams: { search?: string; sort?:"relevant" | "latest" | "oldest" };
+};
 
-  const CompleteTasksCount = () => {
-    let count = 0;
-    for (let i = 0; i < filteredTasks.length; i++) {
-      if (filteredTasks[i].completed === true) {
-        count++;
-      }
-    }
+export default function Tasks({ tasks, searchParams }: TasksProps) {
 
-    return count;
-  };
+  // Extract search and sort from searchParams
+  const searchTerm = searchParams.search ?? "";
+  const sortType = searchParams.sort ?? "latest";
 
-  const searchAndSort = async () => {
-    try {
-      setLoading(true);
+  // Filter tasks based on search term
+  let processedTasks = tasks.filter(
+    (task: FilterTasks) =>
+      task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (task.description?.toLowerCase() ?? "").includes(
+        searchTerm.toLowerCase(),
+      ),
+  );
 
-      if (!tasks || tasks.length === 0) {
-        setFilteredTasks([]);
-        return;
-      }
-
-      let processedTasks = tasks.filter(
-        (task: FilterTasks) =>
-          task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          (task.description?.toLowerCase() ?? "").includes(
-            searchTerm.toLowerCase(),
-          ),
-      );
-
-      if (sortType === "Latest") {
-        processedTasks = processedTasks.sort(
-          (a: FilterTasks, b: FilterTasks) => {
-            return (
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-            );
-          },
-        );
-      } else if (sortType === "Oldest") {
-        processedTasks = processedTasks.sort(
-          (a: FilterTasks, b: FilterTasks) => {
-            return (
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-            );
-          },
-        );
-      }
-
-      setFilteredTasks(processedTasks);
-    } catch (error) {
-      alert("Somthing went wrong");
-      setFilteredTasks([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    searchAndSort();
-  }, [searchTerm, sortType]);
-
-  if (loading) {
-    return "Loading...";
+  // Sort tasks based on sortType
+  if (sortType === "latest") {
+    processedTasks.sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
+  } else if (sortType === "oldest") {
+    processedTasks.sort(
+      (a, b) =>
+        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+    );
   }
 
+  // Count completed tasks
+  const completedCount = processedTasks.filter((t) => t.completed).length;
+  const activeTasks = processedTasks.filter((t) => !t.completed);
+  const completedTasks = processedTasks.filter((t) => t.completed);
+
   return (
-    <div className="w-full space-y-2">
-      {filteredTasks.length === 0 ? (
-        <div className="w-full text-center py-4 text-gray-500">
-          {searchTerm ? "No tasks found matching your search." : ""}
+    <div className="w-full space-y-4">
+      {processedTasks.length === 0 ? (
+        <div className="flex flex-col items-center justify-center rounded-3xl border border-white/20 bg-white/5 py-12 px-6 backdrop-blur-xl dark:border-white/5">
+          <SearchX
+            size={40}
+            className="mb-4 text-slate-300 dark:text-white/20"
+          />
+          <p className="text-sm font-medium text-slate-500 dark:text-white/40">
+            {searchTerm && `No matches for "${searchTerm}"`}
+          </p>
         </div>
       ) : (
-        <div className="flex flex-col">
-          <div>
-            {filteredTasks
-              .filter((task) => !task.completed)
-              .map((task) => (
-                <Task
-                  key={task.id}
-                  id={task.id}
-                  title={task.title}
-                  description={task.description ?? ""}
-                  completed={task.completed}
-                  createdAt={task.createdAt}
-                />
-              ))}
+        <div className="flex flex-col gap-2">
+          {/* Active Tasks Group */}
+          <div className="space-y-1">
+            {activeTasks.map((task) => (
+              <Task
+                key={task.id}
+                {...task}
+                description={task.description ?? ""}
+              />
+            ))}
           </div>
 
-          <div className="mt-2">
-            {CompleteTasksCount() > 0 && (
-              <div
-                onClick={() => setappearCompleted((prev) => !prev)}
-                className=" rounded-sm ml-1 sm:ml-0 flex items-center gap-2 w-fit mb-2 cursor-pointer p-1.5 bg-orange-800 text-white dark:bg-slate-700"
-              >
-                {appearCompleted ? (
-                  <ArrowDown size={18} />
-                ) : (
-                  <ArrowRight size={18} />
-                )}
-                {` Completed (${CompleteTasksCount()}) `}
-              </div>
-            )}
-
-            {appearCompleted &&
-              filteredTasks
-                .filter((task) => task.completed)
-                .map((task) => (
-                  <Task
-                    key={task.id}
-                    id={task.id}
-                    title={task.title}
-                    description={task.description ?? ""}
-                    completed={task.completed}
-                    createdAt={task.createdAt}
-                  />
-                ))}
-          </div>
+          {/* Completed Tasks Accordion */}
+          {completedCount > 0 && (
+            <Accordian completedTasks={completedTasks} count={completedCount} />
+          )}
         </div>
       )}
     </div>
   );
-};
-
-export default Tasks;
+}

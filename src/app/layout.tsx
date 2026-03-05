@@ -3,8 +3,8 @@ import { StackProvider, StackTheme } from "@stackframe/stack";
 import { stackServerApp } from "../stack";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ModalProvider } from "./context/ModalContext";
-import { ThemeProvider } from "./MyComponents/themeProvider"
+import { ThemeProvider } from "./MyComponents/themeProvider";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,16 +28,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-
       <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-orange-50 dark:bg-gray-900 antialiased `}
-      ><StackProvider app={stackServerApp}><StackTheme>
-        <ModalProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {children}
-          </ThemeProvider>
-        </ModalProvider>
-      </StackTheme></StackProvider></body>
+        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
+      >
+        <StackProvider app={stackServerApp}>
+          <StackTheme>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              {children}
+               <Toaster position="top-center" />
+            </ThemeProvider>
+          </StackTheme>
+        </StackProvider>
+      </body>
     </html>
   );
 }
