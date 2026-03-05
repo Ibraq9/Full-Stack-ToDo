@@ -8,9 +8,16 @@ import Tasks from "./Tasks";
 import AddTaskDialog from "./AddTaskDialog";
 import { ClipboardList } from "lucide-react";
 
-const Hero = async ( {searchParams}: { searchParams:{search?: string; sort?:"relevant" | "latest" | "oldest" }}) => {
+const Hero = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    search?: string;
+    sort?: "relevant" | "latest" | "oldest";
+  }>;
+}) => {
   const user = await stackServerApp.getUser();
-  const tasks = await getTasks() ?? [];
+  const tasks = (await getTasks()) ?? [];
 
   return (
     <div className="flex flex-col items-center justify-center mt-28">
@@ -53,13 +60,11 @@ const Hero = async ( {searchParams}: { searchParams:{search?: string; sort?:"rel
         </div>
       )}
 
-     
-
       {!user ? (
         <NotAuthenticated />
       ) : (
         <div className="flex w-16/17 sm:w-3/4 flex-col items-center justify-center mt-10">
-          <Tasks tasks={tasks} searchParams={searchParams}/>
+          <Tasks tasks={tasks} searchParams={searchParams} />
         </div>
       )}
     </div>

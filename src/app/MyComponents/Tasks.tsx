@@ -1,4 +1,3 @@
-
 import React from "react";
 import { SearchX } from "lucide-react";
 import Task from "./Task";
@@ -14,14 +13,16 @@ type FilterTasks = {
 
 type TasksProps = {
   tasks: FilterTasks[];
-  searchParams: { search?: string; sort?:"relevant" | "latest" | "oldest" };
+  searchParams: Promise<{
+    search?: string;
+    sort?: "relevant" | "latest" | "oldest";
+  }>;
 };
 
-export default function Tasks({ tasks, searchParams }: TasksProps) {
-
+export default async function Tasks({ tasks, searchParams }: TasksProps) {
   // Extract search and sort from searchParams
-  const searchTerm = searchParams.search ?? "";
-  const sortType = searchParams.sort ?? "latest";
+  const searchTerm = (await searchParams).search ?? "";
+  const sortType = (await searchParams).sort ?? "latest";
 
   // Filter tasks based on search term
   let processedTasks = tasks.filter(

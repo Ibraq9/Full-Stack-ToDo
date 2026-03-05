@@ -1,8 +1,9 @@
 "use server"
 
-import { PrismaClient } from "../generated/prisma/client";
+// import { PrismaClient } from "../generated/prisma/client";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
+import prisma from "./prismaSetup";
 
 export async function getTasksFrom_DB(userId: string) {
   return await prisma.task.findMany({
@@ -25,6 +26,10 @@ export async function addTask_DB({
 }
 
 export async function deleteTask_DB(id: number) {
+
+  if(!id){
+    throw new Error("missing taskId");
+  }
   return await prisma.task.delete({
     where: { id },
   });
@@ -35,6 +40,18 @@ export async function UpdateTask_DB(
   title: string,
   description: string,
 ) {
+
+  if(!id){
+    throw new Error("missing taskId")
+  }
+
+   if(!title){
+    throw new Error("missing title")
+  }
+
+   if(!description){
+    throw new Error("missing description")
+  }
   return await prisma.task.update({
     where: { id },
     data: {
@@ -48,6 +65,14 @@ export async function Convert_Comp_pend_DB(id: number, isComplete: boolean) {
   const existingTask = await prisma.task.findUnique({
     where: { id },
   });
+
+   if(!id){
+    throw new Error("missing taskId")
+  }
+
+   if(!isComplete){
+    throw new Error("missing isComplete Sign")
+  }
 
   if (existingTask) {
     return await prisma.task.update({
