@@ -38,11 +38,11 @@ const Task = ({
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ["#ffffff", "#cbd5e1"], // Pure glass colors
+        colors: ["#ffffff", "#cbd5e1"],
       });
+      toast.success("Task marked as completed successfully");
     }
     router.refresh();
-    toast.success("Task marked as a completed succesfully");
   };
 
   return (

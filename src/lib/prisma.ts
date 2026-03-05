@@ -86,9 +86,6 @@ export async function Convert_Comp_pend_DB(id: number, isComplete: boolean) {
     throw new Error("missing taskId");
   }
 
-  if (!isComplete) {
-    throw new Error("missing isComplete Sign");
-  }
 
   try {
     if (existingTask) {
