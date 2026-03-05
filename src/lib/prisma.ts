@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 // import { PrismaClient } from "../generated/prisma/client";
 
@@ -6,9 +6,13 @@
 import prisma from "./prismaSetup";
 
 export async function getTasksFrom_DB(userId: string) {
-  return await prisma.task.findMany({
-    where: { userId },
-  });
+  try {
+    return await prisma.task.findMany({
+      where: { userId },
+    });
+  } catch (error) {
+    throw new Error(error + "error occured while retreive tasks");
+  }
 }
 
 export async function addTask_DB({
@@ -20,19 +24,27 @@ export async function addTask_DB({
   description: string;
   userId: string;
 }) {
-  return await prisma.task.create({
-    data: { title, description, userId },
-  });
+  try {
+    return await prisma.task.create({
+      data: { title, description, userId },
+    });
+  } catch (error) {
+    throw new Error(error + "error occured while creating a new task");
+  }
 }
 
 export async function deleteTask_DB(id: number) {
-
-  if(!id){
+  if (!id) {
     throw new Error("missing taskId");
   }
-  return await prisma.task.delete({
-    where: { id },
-  });
+
+  try {
+    return await prisma.task.delete({
+      where: { id },
+    });
+  } catch (error) {
+    throw new Error(error + "error occured while deleting task");
+  }
 }
 
 export async function UpdateTask_DB(
@@ -40,25 +52,29 @@ export async function UpdateTask_DB(
   title: string,
   description: string,
 ) {
-
-  if(!id){
-    throw new Error("missing taskId")
+  if (!id) {
+    throw new Error("missing taskId");
   }
 
-   if(!title){
-    throw new Error("missing title")
+  if (!title) {
+    throw new Error("missing title");
   }
 
-   if(!description){
-    throw new Error("missing description")
+  if (!description) {
+    throw new Error("missing description");
   }
-  return await prisma.task.update({
-    where: { id },
-    data: {
-      title,
-      description,
-    },
-  });
+
+  try {
+    return await prisma.task.update({
+      where: { id },
+      data: {
+        title,
+        description,
+      },
+    });
+  } catch (error) {
+    throw new Error(error + "error occured while updating task");
+  }
 }
 
 export async function Convert_Comp_pend_DB(id: number, isComplete: boolean) {
@@ -66,22 +82,24 @@ export async function Convert_Comp_pend_DB(id: number, isComplete: boolean) {
     where: { id },
   });
 
-   if(!id){
-    throw new Error("missing taskId")
+  if (!id) {
+    throw new Error("missing taskId");
   }
 
-   if(!isComplete){
-    throw new Error("missing isComplete Sign")
+  if (!isComplete) {
+    throw new Error("missing isComplete Sign");
   }
 
-  if (existingTask) {
-    return await prisma.task.update({
-      where: { id },
-      data: { completed: isComplete },
-    });
-  } else {
+  try {
+    if (existingTask) {
+      return await prisma.task.update({
+        where: { id },
+        data: { completed: isComplete },
+      });
+    }
+  } catch (error) {
     throw new Error(
-      "Task not found. Cannot upsert without title and description.",
+      error + "error occured while marked as complete/incomplete task",
     );
   }
 }
